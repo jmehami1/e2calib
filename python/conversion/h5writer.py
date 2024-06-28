@@ -8,7 +8,7 @@ from data.format import Events
 
 class H5Writer:
     def __init__(self, outfile: Path):
-        assert not outfile.exists(), str(outfile)
+        # assert not outfile.exists(), str(outfile)
         self.h5f = h5py.File(str(outfile), 'w')
         self._finalizer = weakref.finalize(self, self.close_callback, self.h5f)
 

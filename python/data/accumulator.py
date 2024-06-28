@@ -31,6 +31,14 @@ class EventAccumulatorRos(EventAccumulator):
         # floor to microseconds.
         self.t.append(event.ts.to_nsec()//1000)
 
+
+    def add_events(self, events):
+        self.x.extend(event.x for event in events)
+        self.y.extend(event.y for event in events)
+        self.p.extend(int(event.polarity) for event in events)
+        # floor to microseconds.
+        self.t.extend(event.ts.to_nsec()//1000 for event in events)
+
 class EventAccumulatorPocolog(EventAccumulator):
     # overwrite abstract method
     def add_event(self, event):
@@ -38,3 +46,5 @@ class EventAccumulatorPocolog(EventAccumulator):
         self.y.append(event.y)
         self.p.append(int(event.polarity))
         self.t.append(event.ts.to_microseconds())
+
+
