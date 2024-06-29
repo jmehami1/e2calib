@@ -1,5 +1,24 @@
 # E2Calib: How to Calibrate Your Event Camera
 
+## Quick run using Docker and Rosbag
+
+```bash
+docker build -t e2calib:latest .
+
+docker run -it --rm --name e2calib --volume ~/Data/srn/prophesee_calibration_6_june:/calibration_data e2calib:latest
+
+python3 python/convert.py /calibration_data/prophesee_calib_noflash.bag --topic /prophesee/camera/cd_events_buffer
+
+python3 python/offline_reconstruction.py --h5file /calibration_data/prophesee_calib_noflash_backup.h5 --freq_hz 5 --upsample_rate 4 --height 720 --width 1280
+
+```
+
+
+
+
+
+
+
 <p align="center">
    <img src="http://rpg.ifi.uzh.ch/img/papers/CVPRW21_Muglikar.png" height="300"/>
 </p>
@@ -184,6 +203,7 @@ For each file, we provide the original event file format (raw or rosbag) but als
 
 ### Prophesee Gen 3
 **Without Triggers:**
+
 ```bash
 wget https://download.ifi.uzh.ch/rpg/e2calib/prophesee/without_triggers/data.raw
 wget https://download.ifi.uzh.ch/rpg/e2calib/prophesee/without_triggers/data.h5
